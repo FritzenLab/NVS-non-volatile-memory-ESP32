@@ -56,6 +56,7 @@ void setup(){
   pinMode(LED, OUTPUT);
   prefs.begin("nv-memory", false);
   Serial.begin(115200);  
+  // Uses WiFi for random number generation only
   WiFi.mode(WIFI_MODE_STA);   // or WIFI_STA
   WiFi.begin();               // starts WiFi driver (no need to connect)
 
@@ -65,7 +66,7 @@ void setup(){
 
 }
 void loop() {
-  decideNow= recordRetrieve(); // a push button controls the blink of an LED  
+  decideNow= recordRetrieve(); // Controle the whole button pushing structure 
 
   if(decideNow == 1){ // record information on memory
     numberOfPresses= 0;  
@@ -115,7 +116,7 @@ int recordRetrieve(){
   return numberOfPresses; // return number of button presses
 }
 int getRandom(){
-  // Example: number from 0 to 100 (inclusive)
+  // Example: number from 0 to 100 (including 100)
   uint32_t r = randomRange(0, 101);
   return r;
 }
