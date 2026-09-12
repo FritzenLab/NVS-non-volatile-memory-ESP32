@@ -1,6 +1,6 @@
 
 // reference: https://dronebotworkshop.com/esp32-non-volatile-storage/
-#define button 20
+#define button 7
 #define LED 14
 #include <Preferences.h>
 #include <esp_system.h> // Required for esp_random()
@@ -14,7 +14,7 @@ volatile int pressCount = 0;
 const int ledInterval = 300;
 volatile int numberOfPresses = 0;
 volatile int decideNow = 0;
-volatile uint16_t randomVar = 0;
+volatile uint16_t randomVarPrint = 0;
 volatile int randomNumber = 0;
 volatile unsigned long pressTimer = 0;
 
@@ -66,22 +66,22 @@ void setup(){
 
 }
 void loop() {
-  decideNow= recordRetrieve(); // Controle the whole button pushing structure 
+  decideNow= recordRetrieve(); // Controls the whole button pushing structure 
 
-  if(decideNow == 1){ // record information on memory
+  if(decideNow == 2){ // record information on memory
     numberOfPresses= 0;  
     decideNow= 0;
     randomNumber = getRandom();
-    prefs.putUShort("Random", randomNumber);
+    prefs.putUShort("RandomVar", randomNumber);
     Serial.print("Saved ");
     Serial.println(randomNumber);
 
-  }else if(decideNow == 2){ // retrieve information from memory
+  }else if(decideNow == 1){ // retrieve information from memory
     numberOfPresses= 0;  
     decideNow= 0;
-    randomVar = prefs.getUShort("Random", 0);
-    Serial.print("Retrieved ");
-    Serial.println(randomVar);
+    randomVarPrint = prefs.getUShort("RandomVar", 0);
+    Serial.print("Read ");
+    Serial.println(randomVarPrint);
   }else{
 
   }
